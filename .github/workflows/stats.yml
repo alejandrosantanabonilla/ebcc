@@ -1,4 +1,4 @@
-name: vayesta_stats_fork
+name: ebcc_stats_fork
 
 on:
   # Allows you to run this workflow manually from the Actions tab
@@ -19,16 +19,16 @@ jobs:
           
       - name: get views    
         run: |
-            curl -H "Accept: application/vnd.github+json" -H "Authorization: Bearer ${{ secrets.EBCC_VIEWS }}" --request GET https://api.github.com/repos/BoothGroup/Vayesta/traffic/views -o views.json 
+            curl -H "Accept: application/vnd.github+json" -H "Authorization: Bearer ${{ secrets.EBCC_VIEWS }}" --request GET https://api.github.com/repos/BoothGroup/ebcc/traffic/views -o views.json 
       - name: get clones
         run: |
-            curl -H "Accept: application/vnd.github+json" -H "Authorization: Bearer ${{ secrets.EBCC_VIEWS}}" --request GET https://api.github.com/repos/BoothGroup/Vayesta/traffic/clones -o clones.json 
+            curl -H "Accept: application/vnd.github+json" -H "Authorization: Bearer ${{ secrets.EBCC_VIEWS}}" --request GET https://api.github.com/repos/BoothGroup/ebcc/traffic/clones -o clones.json 
       - name: get referrals
         run: |
-            curl -H "Accept: application/vnd.github+json" -H "Authorization: Bearer ${{ secrets.EBCC_VIEWS }}" --request GET https://api.github.com/repos/BoothGroup/Vayesta/traffic/popular/referrers -o referrers.json 
+            curl -H "Accept: application/vnd.github+json" -H "Authorization: Bearer ${{ secrets.EBCC_VIEWS }}" --request GET https://api.github.com/repos/BoothGroup/ebcc/traffic/popular/referrers -o referrers.json 
       - name: get paths
         run: |
-            curl -H "Accept: application/vnd.github+json" -H "Authorization: Bearer ${{ secrets.EBCC_VIEWS }}" --request GET https://api.github.com/repos/BoothGroup/Vayesta/traffic/popular/paths -o paths.json 
+            curl -H "Accept: application/vnd.github+json" -H "Authorization: Bearer ${{ secrets.EBCC_VIEWS }}" --request GET https://api.github.com/repos/BoothGroup/ebcc/traffic/popular/paths -o paths.json 
      
       - name: Generate artifact name
         id: generate-name
@@ -59,8 +59,8 @@ jobs:
              mkdir data_1
              mv *.zip data_1/
              cd data_1
-             git clone -b stats https://github.com/alejandrosantanabonilla/Vayesta
-             mv *.zip Vayesta/statistics
+             git clone -b stats https://github.com/alejandrosantanabonilla/ebcc
+             mv *.zip ebcc/statistics
              
       - name: Commit files
         run: |
@@ -69,5 +69,5 @@ jobs:
           git config user.email "$(git log -n 1 --pretty=format:%ae)"
           git add *.zip
           git commit -m "Add new bi-weekly stats" -a
-          git remote set-url origin https://alejandrosantanabonilla:${{ secrets.EBCC_VIEWS }}@github.com/alejandrosantanabonilla/Vayesta.git
+          git remote set-url origin https://alejandrosantanabonilla:${{ secrets.EBCC_VIEWS }}@github.com/alejandrosantanabonilla/ebcc.git
           git push 
